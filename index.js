@@ -6,6 +6,7 @@ const port = 3000
 const connect = require('./schemas')
 connect()
 
+//미들웨어 쓸 준비
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(express.static('public'));
@@ -13,6 +14,7 @@ app.use(express.static('public'));
 // const goodsRouter = require('./routes/goods')
 // const userRouter = require('./routes/user')
 
+// goods api 서버 만들기
 const goodsRouter = require("./routers/goods");
 app.use("/api", [goodsRouter]);
 
@@ -33,7 +35,7 @@ app.set('view engine', 'ejs');
 
 app.get('/test', (req, res) => {
     let name = req.query.name;
-    res.render('test', {name});
+    res.render('test', {name}); // test.ejs 파일을 그리라는 뜻이고 그 ejs 파일에 name 값을 객체로 넘겨준다는 의미
 })
 
 app.get('/', (req, res) => {
@@ -62,10 +64,12 @@ app.get('/detail', (req, res) => {
     res.render('detail')
 })
 
+// 장바구니 페이지 연결
 app.get('/cart', (req, res) => {
     res.render('cart')
 })
 
+// 구매 페이지 연결
 app.get('/order', (req, res) => {
     res.render('order')
 })

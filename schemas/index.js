@@ -1,3 +1,5 @@
+// 몽구스를 이용해 몽고디비에 접속
+
 const mongoose = require("mongoose");
 
 const connect = () => {

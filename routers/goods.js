@@ -1,12 +1,14 @@
 const express = require("express");
-const Goods = require("../schemas/Goods");
+const Goods = require("../schemas/goods");
 const Cart = require("../schemas/cart");
 
 const router = express.Router();
 
+// mongoDB 상품정보 api
+// views/index.ejs의 $("#categorySelect") 안에 내용이 get_goods 함수를 호출
 router.get("/goods", async (req, res, next) => {
   try {
-    const { category } = req.query;
+    const { category } = req.query; // querystring
     const goods = await Goods.find({ category }).sort("-goodsId");
     res.json({ goods: goods });
   } catch (err) {
@@ -64,14 +66,14 @@ router.get("/goods/add/crawling", async (req, res) => {
   }
 });
 
-// 상품 상세페이지 api
+// 상품 상세페이지 api, mongoDB 상품정보 api
 router.get("/goods/:goodsId", async (req, res) => {
   const { goodsId } = req.params;
   goods = await Goods.findOne({ goodsId: goodsId });
   res.json({ detail: goods });
 });
 
-// 상품 메인페이지 api
+// 상품 메인페이지 api, 상품추가하기 api
 router.post('/goods', async (req, res) => {
   const { goodsId, name, thumbnailUrl, category, price } = req.body;
 
@@ -83,7 +85,7 @@ router.post('/goods', async (req, res) => {
 });
 
 
-// 카트 api
+// 장바구니 api
 // 해당 goods 에 대한 장바구니를 추가하기 때문에 cart router 를 따로 만들지 않는다
 router.post("/goods/:goodsId/cart", async (req, res) => {
   const { goodsId } = req.params;
@@ -111,6 +113,7 @@ router.delete("/goods/:goodsId/cart", async (req, res) => {
   res.send({ result: "success" });
 });
 
+// 장바구니 수량변경 api
 router.patch('/goods/:goodsId/cart', async (req, res) => {
   const { goodsId } = req.params;
   const { quantity } = req.body;
@@ -123,6 +126,7 @@ router.patch('/goods/:goodsId/cart', async (req, res) => {
   res.send({ result: "success" });
 });  
 
+// 장바구니 페이지 api
 router.get("/cart", async (req, res) => {
   const cart = await Cart.find({});
   const goodsId = cart.map(cart => cart.goodsId);

@@ -1,3 +1,5 @@
+// 데이터 모델링 하기 위한 schema 객체 만들기
+
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;

@@ -1,3 +1,4 @@
+// 장바구니 모델 추가하기
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;

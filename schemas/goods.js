@@ -24,5 +24,6 @@ const goodsSchema = new Schema({
     type: Number
   }
 });
+console.log(price)
 
 module.exports = mongoose.model("Goods", goodsSchema);
